@@ -7,7 +7,7 @@ def enter_clicked():
     address = addressEntry.get()
     print(name)
     print(address)
-   strList = [name,address]
+strList = [name,address]
    info = '\n'.join(strList)
    infoLabel.configure(text=info)
 

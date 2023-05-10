@@ -39,6 +39,13 @@ def Back():
     currentText = currentText[0:len(currentText)-1]
     updateText()
 
+def plus_minus():
+    global currentText
+    if '-' in currentText:
+       currentText = currentText.replace('-', '')
+    else:
+        currentText = '-' + currentText
+    updateText()
 app = ctk.CTk()
 app.geometry("350x500")
 app.title("Calculator")
@@ -150,7 +157,7 @@ btnPlus.grid(row=3, column=3, padx=3, pady=2)
 
 btnPlusMinus = ctk.CTkButton(master=btnFrame, text="+/-", width=75, height=65,
                       font=ctk.CTkFont(size=30),
-                      fg_color="gray75", bg_color="white")
+                      fg_color="gray75", bg_color="white", command=plus_minus)
 btnPlusMinus.grid(row=4, column=0, padx=2, pady=2)
 
 btn0 = ctk.CTkButton(master=btnFrame, text="0", width=75, height=65,

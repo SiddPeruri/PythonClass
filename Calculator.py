@@ -4,20 +4,48 @@ currentText = "0"
 num = 0
 op = ""
 
+def updateText():
+    global currentText
+    if len(currentText)==0:
+        currentText = "0"
+
+    if len(currentText) > 12:
+        currentText = currentText[:12]
+    calcLabel.configure(text=currentText)
+
 
 
 def addText(str):
     global currentText
     if float(currentText) == 0 and str != '.' and '.' not in currentText:
-
         currentText = ""
+    if '.' in currentText and str == '.':
+        return
     currentText = currentText + str
-    calcLabel.configure(text=currentText)
+    updateText()
 
 
+def CE():
+    global currentText
+    global num
+    global op
+    currentText = "0"
+    num = 0
+    op = ""
+    updateText()
 
+def Back():
+    global currentText
+    currentText = currentText[0:len(currentText)-1]
+    updateText()
 
-
+def plus_minus():
+    global currentText
+    if '-' in currentText:
+       currentText = currentText.replace('-', '')
+    else:
+        currentText = '-' + currentText
+    updateText()
 app = ctk.CTk()
 app.geometry("350x500")
 app.title("Calculator")
@@ -27,7 +55,7 @@ calcFrame =ctk.CTkFrame(master=app, width=340, height=70,
                         bg_color="white", fg_color="white")
 calcFrame.grid(row=0, column=0, padx=5, pady=5)
 
-calcLabel = ctk.CTkLabel(master=calcFrame, text="0", width=330, height=70,
+calcLabel = ctk.CTkLabel(master=calcFrame, text="0", width=330, height=50,
                          anchor="e", font=ctk.CTkFont(size=50))
 calcLabel.grid(row=0, column=0, padx=5)
 
@@ -40,12 +68,12 @@ btnFrame.grid(row=1, column=0, padx=5, pady=5)
 # row=0
 btnCE = ctk.CTkButton(master=btnFrame, text="CE", width=75, height=65,
                       font=ctk.CTkFont(size=30),
-                      fg_color="gray", bg_color="white")
+                      fg_color="gray", bg_color="white", command=CE)
 btnCE.grid(row=0, column=0, padx=2, pady=2)
 
 btnBack = ctk.CTkButton(master=btnFrame, text="<--", width=75, height=65,
                       font=ctk.CTkFont(size=30),
-                      fg_color="gray", bg_color="white")
+                      fg_color="gray", bg_color="white", command=Back)
 btnBack.grid(row=0, column=1, padx=2, pady=2)
 
 btnPercent = ctk.CTkButton(master=btnFrame, text="%", width=75, height=65,
@@ -113,7 +141,7 @@ btn1.grid(row=3, column=0, padx=2, pady=2)
 btn2 = ctk.CTkButton(master=btnFrame, text="2", width=75, height=65,
                       font=ctk.CTkFont(size=30),
                       fg_color="gray75", bg_color="white",
-                     command=lambda: addText("1"))
+                     command=lambda: addText("2"))
 btn2.grid(row=3, column=1, padx=2, pady=2)
 
 btn3 = ctk.CTkButton(master=btnFrame, text="3", width=75, height=65,
@@ -129,7 +157,7 @@ btnPlus.grid(row=3, column=3, padx=3, pady=2)
 
 btnPlusMinus = ctk.CTkButton(master=btnFrame, text="+/-", width=75, height=65,
                       font=ctk.CTkFont(size=30),
-                      fg_color="gray75", bg_color="white")
+                      fg_color="gray75", bg_color="white", command=plus_minus)
 btnPlusMinus.grid(row=4, column=0, padx=2, pady=2)
 
 btn0 = ctk.CTkButton(master=btnFrame, text="0", width=75, height=65,
